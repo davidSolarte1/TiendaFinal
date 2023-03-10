@@ -120,12 +120,13 @@ if($productos != null){
                     <?php } ?> 
                 </table>
             </div>
-
+            <?php if($lista_carrito != null){?>
             <div class="row">
                 <div class="col-md-5 offset-md-7 d-grid gap-2">
-                    <button class="btn btn-primary btn-lg">Realizar pago</button>
+                    <a href="pago.php" class="btn btn-primary btn-lg">Realizar pago</a>
                 </div>
             </div>
+            <?php } ?>
         </div>
     </main>
 
