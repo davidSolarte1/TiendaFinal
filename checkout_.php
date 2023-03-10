@@ -5,37 +5,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-    <script src="https://www.paypal.com/sdk/js?client-id=ATi5gpbweeYOeq3ohjaE6avVJez6G7HkTH8g0sO_TxpwVNQzxoNFZe9OP-PZnQ8E8ZvxmpPrbrzWR4Kg"></script>
 </head>
+
 <body>
-    <!--
-    <div id="paypal-button-container">
-
+<div id="smart-button-container">
+      <div style="text-align: center;">
+        <div id="paypal-button-container"></div>
+      </div>
     </div>
+  <script src="https://www.paypal.com/sdk/js?client-id=Aa7DJssZI2_UHgMjnvsqQlqmsRmfRvTsANfb6GVIBJfIG4if1U1_Z2mdNMjqiQxKG5LnXkh_J071oFbr&currency=USD" data-sdk-integration-source="button-factory"></script>
+  <script>
+    function initPayPalButton() {
+      paypal.Buttons({
+        style: {
+          shape: 'pill',
+          color: 'blue',
+          layout: 'vertical',
+          label: 'pay',
+          
+        },
 
-    <script>
-        paypal.Buttons({
-            style:{
-                color: 'blue',
-                shape: 'pill',
-                label: 'pay'
-            },
-            createOrder: function(data, actions){
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: 2000
-                        }
-                    }]
-                })
-            },
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{"amount":{"currency_code":"USD","value":1}}]
+          });
+        },
 
-            onCancel: function(data){
-                alert("Pago Cancelado"):
-                console.log(data)
-            }
-        }).render('#paypal-button-container');
-    </script>*/ -->
+        onCancel: function(data){
+            alert("Pago Cancelado")
+        },
+
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(detalles) {
+            console.log(detalles);
+            /*
+            // Full available details
+            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+            // Show a success message within this page, e.g.
+            const element = document.getElementById('paypal-button-container');
+            element.innerHTML = '';
+            element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+            // Or go to another URL:  actions.redirect('thank_you.html');
+            */
+          });
+        },
+
+        onError: function(err) {
+          console.log(err);
+        }
+      }).render('#paypal-button-container');
+    }
+    initPayPalButton();
+  </script>
 </body>
 </html>
