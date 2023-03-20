@@ -174,18 +174,9 @@ if($productos != null){
 
                     detalles: detalles
                 })
+            }).then(function(response){
+                window.location.href = "completado.php?key=" +detalles['id']; //datos['detalles']['id']
             })
-            /*
-            // Full available details
-            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-
-            // Show a success message within this page, e.g.
-            const element = document.getElementById('paypal-button-container');
-            element.innerHTML = '';
-            element.innerHTML = '<h3>Thank you for your payment!</h3>';
-
-            // Or go to another URL:  actions.redirect('thank_you.html');
-            */
           });
         },
 
