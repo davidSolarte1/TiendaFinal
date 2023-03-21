@@ -6,6 +6,13 @@ define("CURRENCY", "USD");
 define("KEY_TOKEN", "WazaSA.BEL-12");
 define("MONEDA", "$");
 
+define("MAIL_HOST", "smtp.gmail.com");
+define("MAIL_USER", "ventastiendabarrio@gmail.com");
+define("MAIL_PASS", "fhpdezstvrdvnvfn");
+define("MAIL_PORT", "587");
+
+define("SITE_URL", "http://localhost/TiendaFinal");
+
 session_start();
 
 $num_cart = 0;
