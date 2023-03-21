@@ -53,9 +53,6 @@ if(!empty($_POST)){
     }
 }
 
-
-//print_r($_SESSION);
-//session_destroy();
 ?>
 
 
@@ -119,6 +116,7 @@ if(!empty($_POST)){
                 <div class="col-md-6">
                     <label for="email"><span class="text-danger">*</span>Email</label>
                     <input type="email" name="email" id="email" class="form-control" requireda>
+                    <span id="validaEmail" class="text-danger"></span>
                 </div>
 
                 <div class="col-md-6">
@@ -134,6 +132,7 @@ if(!empty($_POST)){
                 <div class="col-md-6">
                     <label for="usuario"><span class="text-danger">*</span>Usuario</label>
                     <input type="text" name="usuario" id="usuario" class="form-control" requireda>
+                    <span id="validaUsuario" class="text-danger"></span>
                 </div>
 
                 <div class="col-md-6">
@@ -158,6 +157,58 @@ if(!empty($_POST)){
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
-    
+    <script>
+        let txtUsuario = document.getElementById('usuario')
+        txtUsuario.addEventListener("blur", function(){
+            existeUsuario(txtUsuario.value)
+        }, false)
+
+        let txtEmail = document.getElementById('email')
+        txtEmail.addEventListener("blur", function(){
+            existeEmail(txtEmail.value)
+        }, false)
+
+        function existeUsuario(usuario){
+            let url = "clases/clienteAjax.php"
+            let formData = new FormData()
+            formData.append("action", "existeUsuario")
+            formData.append("usuario", usuario)
+
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                if(data.ok){
+                    document.getElementById('usuario').value = ''
+                    document.getElementById('validaUsuario').innerHTML = 'Usuario no disponible'
+                }else{
+                    document.getElementById('validaUsuario').innerHTML = ''
+                }
+            })
+        }
+
+
+        function existeEmail(email){
+            let url = "clases/clienteAjax.php"
+            let formData = new FormData()
+            formData.append("action", "existeEmail")
+            formData.append("email", email)
+
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                if(data.ok){
+                    document.getElementById('email').value = ''
+                    document.getElementById('validaEmail').innerHTML = 'Email no disponible'
+                }else{
+                    document.getElementById('validaEmail').innerHTML = ''
+                }
+            })
+        }
+
+    </script>
 </body>
 </html>
