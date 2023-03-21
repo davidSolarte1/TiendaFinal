@@ -105,9 +105,7 @@ if(!empty($_POST)){
                         <a href="#" class="nav-link">Contacto</a>
                     </li>
                 </ul>
-                <a href="checkout.php" class="btn btn-primary">
-                    Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
-                </a>
+                
             </div>
 
             </div>

@@ -19,13 +19,13 @@ class Mailer{
         $mail->isSMTP();                                          
         $mail->Host       = 'smtp.gmail.com';                    
         $mail->SMTPAuth   = true;                                   
-        $mail->Username   = 'ventastiendabarrio@gmail.com';              
-        $mail->Password   = 'fhpdezstvrdvnvfn';                               
+        $mail->Username   = 'labellaquea13@gmail.com';              
+        $mail->Password   = 'juaqjzzkikhongoa';                               
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;           
         $mail->Port       = 587;                                    // use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
-        $mail->setFrom('ventastiendabarrio@gmail.com', 'TiendaMerca');
+        $mail->setFrom('labellaquea13@gmail.com', 'La Bellaquea');
         $mail->addAddress($email);  
 
         //Content
