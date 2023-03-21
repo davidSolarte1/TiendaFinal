@@ -95,4 +95,32 @@ function activarUsuario($id,$con){
     return $sql->execute([$id]);
 
 }
-?>
+
+function login($usuario, $password, $con){
+    $sql = $con->prepare("SELECT id, usuario, password FROM usuarios WHERE usuario LIKE ? LIMIT 1");
+    $sql->execute([$usuario]);
+    if($row = $sql->fetch(PDO::FETCH_ASSOC)){
+        if(esActivo($usuario,$con)){
+            if(password_verify($password, $row['password'])){
+                $_SESSION['user_id'] = $row['id'];
+                $_SESSION['user_name'] = $row['usuario'];
+                header("Location: index.php");
+                exit;
+            }
+        } else{
+            return 'El usuario no ha sido activado';
+        } 
+    }
+    return 'El usuario y/o contraseña son incorrectos';
+}
+
+function esActivo($usuario,$con){
+    $sql = $con->prepare("SELECT activacion FROM usuarios WHERE usuario LIKE ? LIMIT 1");
+    $sql->execute([$usuario]);
+    $row = $sql->fetch(PDO::FETCH_ASSOC);
+    if($row['activacion']==1){
+        return true;
+    }
+    return false;
+
+}

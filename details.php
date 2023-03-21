@@ -74,6 +74,7 @@ if($id == '' || $token == '' ){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <title>La Bellaquea</title>
     <link rel="stylesheet" href="css/estilos.css">
+    <script src="https://kit.fontawesome.com/b7395829bd.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -95,9 +96,15 @@ if($id == '' || $token == '' ){
                         <a href="#" class="nav-link">Contacto</a>
                     </li>
                 </ul>
-                <a href="checkout.php" class="btn btn-primary">
+                <a href="checkout.php" class="btn btn-primary me-2"><i class="fa-solid fa-cart-shopping"></i>
                     Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
                 </a>
+
+                <?php if(isset($_SESSION['user_id'])){ ?>
+                <a href="#" class="btn btn-success"> <i class="fa-solid fa-user"></i> <?php echo $_SESSION['user_name'] ?></a>
+                <?php }else{ ?>
+                <a href="login.php" class="btn btn-success"> <i class="fa-solid fa-user"></i> Ingresar </a>
+                <?php } ?>
             </div>
 
             </div>
