@@ -15,14 +15,14 @@ $item->currency_id = "COP";
 
 $preference->items = array($item);
 
-$preference->auto_return = "approved";
-$preference->binary_mode = true; 
 
 $preference->back_urls = array(
     "success" => "http://localhost/TiendaFinal/captura.php",
     "failure" => "http://localhost/TiendaFinal/fallo.php"
 );
 
+$preference->auto_return = "approved";
+$preference->binary_mode = true; 
 
 $preference->save();
 

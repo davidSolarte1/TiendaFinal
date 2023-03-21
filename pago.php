@@ -2,6 +2,14 @@
 
 require 'config/config.php';
 require 'config/database.php';
+require 'vendor/autoload.php';
+MercadoPago\SDK::setAccessToken(TOKEN_MP);
+
+$preference = new MercadoPago\Preference();
+$productos_mp = array();
+
+
+
 $db = new Database();
 $con = $db->conectar();
 
@@ -39,6 +47,10 @@ if($productos != null){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <title>La Bellaquea</title>
     <link rel="stylesheet" href="css/estilos.css">
+
+    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID;?>&currency=<?php echo CURRENCY?>" data-sdk-integration-source="button-factory"></script>
+
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
 <body>
     <header>
@@ -75,9 +87,18 @@ if($productos != null){
             <div class="row">
                 <div class="col-6">
                     <h4>Detalles de pago</h4>
-                    <div id="paypal-button-container"></div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="paypal-button-container"></div>
+                        </div>
+                    </div>
+                
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="checkout-btn"></div>
+                        </div>
+                    </div>
                 </div>
-
                 <div class="col-6">
                     <div class="table-responsive">
                         <table class="table">
@@ -103,6 +124,14 @@ if($productos != null){
                                         $precio_desc = $precio - (($precio*$descuento)/100);
                                         $subtotal = $cantidad * $precio_desc;
                                         $total += $subtotal;
+                                        $item = new MercadoPago\Item();
+                                        $item->id = $_id;
+                                        $item->title = $nombre;
+                                        $item->quantity = $cantidad;
+                                        $item->unit_price = $precio_desc;
+                                        $item->currency_id = "COP";
+                                        array_push($productos_mp, $item);
+                                        unset($item);
                                         ?>
                                     
                                 <tr>
@@ -123,16 +152,28 @@ if($productos != null){
                             <?php } ?> 
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>
     </main>
 
+<?php 
+$preference->items = $productos_mp;
+$preference->back_urls = array(
+    "success" => "http://localhost/TiendaFinal/captura.php",
+    "failure" => "http://localhost/TiendaFinal/fallo.php"
+);
+
+$preference->auto_return = "approved";
+$preference->binary_mode = true; 
+
+$preference->save();
+
+?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
-    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID;?>&currency=<?php echo CURRENCY?>" data-sdk-integration-source="button-factory"></script>
+    
 
     <script src="https://www.paypal.com/sdk/js?client-id=Aa7DJssZI2_UHgMjnvsqQlqmsRmfRvTsANfb6GVIBJfIG4if1U1_Z2mdNMjqiQxKG5LnXkh_J071oFbr&currency=USD" data-sdk-integration-source="button-factory"></script>
   <script>
@@ -184,6 +225,20 @@ if($productos != null){
           console.log(err);
         }
       }).render('#paypal-button-container');
+
+      const mp = new MercadoPago('TEST-7d7691fd-0d98-49ca-ba37-1c5fa9dd17ed',{
+            locale: 'es-CO'
+        });
+
+        mp.checkout({
+            preference:{
+                id:'<?php echo $preference->id;?>'
+            },
+            render:{
+                container: '.checkout-btn',
+                label: 'Pagar con Mercado Pago'
+            }
+        })
     }
     initPayPalButton();
   </script>
