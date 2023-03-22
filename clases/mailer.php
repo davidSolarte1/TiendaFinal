@@ -6,10 +6,10 @@ use PHPMailer\PHPMailer\{PHPMailer,SMTP,Exception};
 class Mailer{
     function enviarEmail($email,$asunto,$cuerpo){
 
-        require_once './config/config.php';
-        require './phpmailer/src/PHPMailer.php';
-        require './phpmailer/src/SMTP.php';
-        require './phpmailer/src/Exception.php';
+        require_once __DIR__ . '/../config/config.php';
+        require __DIR__ . '/../phpmailer/src/PHPMailer.php';
+        require __DIR__ . '/../phpmailer/src/SMTP.php';
+        require __DIR__ . '/../phpmailer/src/Exception.php';
 
         $mail = new PHPMailer(true);
 

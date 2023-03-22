@@ -2,6 +2,9 @@
 
 require 'config/config.php';
 require 'config/database.php';
+
+
+
 $db = new Database();
 $con = $db->conectar();
 
@@ -10,7 +13,7 @@ $sql = $con->prepare("SELECT id,nombre,precio FROM productos WHERE activo = 1");
 $sql->execute();
 $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-//print_r($_SESSION);
+print_r($_SESSION);
 //session_destroy();
 ?>
 

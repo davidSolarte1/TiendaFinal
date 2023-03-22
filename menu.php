@@ -30,7 +30,7 @@
                             <a href="#" class="nav-link">Contacto</a>
                         </li>
                     </ul>
-                    <a href="checkout.php" class="btn btn-primary btn-sm me-2">
+                    <a href="checkout.php" class="btn btn-primary btn-sm me-2"><i class="fa-solid fa-cart-shopping"></i>
                         Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
                     </a>
 
@@ -38,7 +38,7 @@
 
                     <div class="dropdown">
                          <button id="btn_session" class="btn btn-success btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                         <i class="fa-solid fa-user"></i> <?php echo $_SESSION['user_name']; ?>
+                         <i class="fa-solid fa-user"></i> &nbsp; <?php echo $_SESSION['user_name']; ?>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="btn_session">
                             <li><a class="dropdown-item" href="logout.php">Cerrar Sesion</a></li>                      

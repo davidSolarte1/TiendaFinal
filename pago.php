@@ -54,33 +54,7 @@ if($productos != null){
     <script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
 <body>
-    <header>
-        <div class="navbar navbar-expand-lg navbar-dark bg-dark ">
-            <div class="container">
-                <a href="index.php" class="navbar-brand ">
-                    <strong>Tienda</strong>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-            <div class="collapse navbar-collapse" id="navbarHeader">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a href="index.php" class="nav-link active">Catalogo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Contacto</a>
-                    </li>
-                </ul>
-                <a href="checkout.php" class="btn btn-primary">
-                    Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
-                </a>
-            </div>
-
-            </div>
-        </div>
-    </header>
+    <?php include 'menu.php'?>
     <!--Contenido-->
     <main>
         <div class="container">
@@ -161,7 +135,7 @@ if($productos != null){
 <?php 
 $preference->items = $productos_mp;
 $preference->back_urls = array(
-    "success" => "http://localhost/TiendaFinal/captura.php",
+    "success" => "http://localhost/TiendaFinal/clases/captura_mp.php",
     "failure" => "http://localhost/TiendaFinal/fallo.php"
 );
 
@@ -203,7 +177,7 @@ $preference->save();
         },
 
         onApprove: function(data, actions) {
-            let URL = 'clases/captura.php'
+            let url = 'clases/captura.php'
           return actions.order.capture().then(function(detalles) {
             console.log(detalles);
             let url = 'clases/captura.php'
